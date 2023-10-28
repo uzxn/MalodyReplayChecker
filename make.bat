@@ -1,0 +1,1 @@
+tcc -Wall main.c func.c -o mr.exe
