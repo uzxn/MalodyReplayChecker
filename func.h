@@ -27,6 +27,5 @@ void read_int(FILE *fp, int *var);
 void read_str(FILE *fp, char *str);
 void MalodyReplayInfo_read(FILE *fp, MalodyReplayInfo *mr);
 void MalodyReplayInfo_print(MalodyReplayInfo *mr);
-void print_mods(int n);
 
 #endif /* func.h */
