@@ -4,11 +4,11 @@
 #include "func.h"
 
 void read_int(FILE *fp, int *var) {
-	fread(var, sizeof(int), 1, fp);
+    fread(var, sizeof(int), 1, fp);
 }
 
 void read_str(FILE *fp, char *str) {
-	int len = 0;
+    int len = 0;
 	read_int(fp, &len);
     fread(str, sizeof(char), len, fp);
 }
@@ -16,7 +16,7 @@ void read_str(FILE *fp, char *str) {
 void MalodyReplayInfo_read(FILE *fp, MalodyReplayInfo *mr) {
     int n = 0;
     string str = {0};
-	read_str(fp, str); // "mr format head"
+    read_str(fp, str); // "mr format head"
 	memset(str, 0, STR_SIZE);
 	fread(&mr->ver[2], sizeof(byte), 1, fp); // Malody Version
 	fread(&mr->ver[1], sizeof(byte), 1, fp);
@@ -39,7 +39,7 @@ void MalodyReplayInfo_read(FILE *fp, MalodyReplayInfo *mr) {
 	read_int(fp, &n); // *unknown
 	read_int(fp, &n); // Time
     strcpy(str, ctime((time_t *)&n));
-    str[strlen(str)-1] = 0; // ctime ·µ»ØµÄ×Ö·û´®×Ô´ø»»ÐÐ·û
+    str[strlen(str)-1] = 0; // ctime è¿”å›žçš„å­—ç¬¦ä¸²è‡ªå¸¦æ¢è¡Œç¬¦
     strcpy(mr->time, str);
 }
 
