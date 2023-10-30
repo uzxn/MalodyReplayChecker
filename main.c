@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
         }
         FILE *fp_out = fopen(argv[1], "w");
         fprintf(fp_out,
-                "Song Name,Song Author,Difficulty,"
+                "File Name,Song Name,Song Author,Difficulty,"
                 "Score,Accuracy,Judgement,Max Combo,Best,Cool,Good,Miss,Mods,"
                 "Chart md5,Time,Malody Ver\n");
         for (int i = 2; i < argc; i++) {
@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
                 return 0;
             }
             printf("current file: %s\n", argv[i]);
+            fprintf(fp_out, "%s,", argv[i]);
             MalodyReplayInfo mr;
             memset(&mr, 0, sizeof(MalodyReplayInfo));
             MalodyReplayInfo_read(fp_in, &mr);
