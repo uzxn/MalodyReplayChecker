@@ -1,1 +1,1 @@
-tcc -Wall main.c func.c -o mr.exe
+tcc -Wall main.c func.c -o mr.exe -m32

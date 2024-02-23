@@ -4,7 +4,11 @@ Malody 回放文件信息查看工具
 
 ## 使用方法
 
-### 输出到命令行
+### 显示帮助信息
+
+在命令行下执行：`mr`。
+
+### 查看回放信息
 
 在命令行下执行：`mr XXX.mr YYY.mr ...`，其中 `XXX.mr` `YYY.mr` 为回放文件，支持多文件。
 
@@ -12,32 +16,75 @@ Malody 回放文件信息查看工具
 
 使用例：
 
-![](mr.png)
+```txt
+D:\>mr test.mr
+----------------+------------------------------------------------
+ File Name      | test.mr
+----------------+------------------------------------------------
+ Song Name      | Handstream Pack ver.3
+ Song Author    | Various Artists
+ Difficulty     | [Boss] KisenonP feat. Hatsune Miku - Hayabusa
+ Score          | 5354593
+ Accuracy       | 98.5972%
+ Judgement      | C
+ Max Combo      | 1095
+ Best           | 2767
+ Cool           | 127
+ Good           | 5
+ Miss           | 6
+ Mods           | Const
+ Chart md5      | cc4095b3ebeaea3395a1fac3002f13ac
+ Time           | 2023-03-27 00:27:25
+ Malody Ver     | 4.3.7
+----------------+------------------------------------------------
+```
 
 ### 生成 .csv 文件
 
-> .csv 文件可以直接用 Excel 打开并编辑，方便管理。
+> .csv 文件可以直接用 Excel 打开并编辑。
 
 在命令行下执行：`mr csv outfile.csv XXX.mr YYY.mr ...`，其中 `outfile.csv` 为生成文件名，`XXX.mr` `YYY.mr` 为回放文件，支持多文件。
 
-例如：`mr csv out.csv a.mr`，`mr csv info.csv a.mr b.mr c.mr`。
+例如：`mr csv out.csv a.mr` `mr csv info.csv a.mr b.mr c.mr`。
 
 使用例：
 
-![](csv.png)
+```txt
+D:\>mr csv out.csv test.mr
+Current file: test.mr
+All finished
+```
 
 用 Excel 打开生成的 .csv 文件：
 
 ![](excel.png)
+
+### 批量重命名
+
+在命令行下执行：`mr rename XXX.mr YYY.mr ...`，其中 `XXX.mr` `YYY.mr` 为回放文件，支持多文件。
+
+例如：`mr rename a.mr` `mr rename a.mr b.mr c.mr`。
+
+回放文件将会重命名为以下格式：`[歌曲名称]_[难度名称]_[判定][ACC].mr`。
+
+例如：`Malody 4K Dan v3 (Regular)-Jack_Reg-9 Kikai Shoujo Gensou_C99.30.mr`。
+
+### 查看新文件名
+
+在命令行下执行：`mr name XXX.mr YYY.mr ...`，其中 `XXX.mr` `YYY.mr` 为回放文件，支持多文件。
+
+例如：`mr name a.mr` `mr name a.mr b.mr c.mr`。
+
+会将 `[歌曲名称]_[难度名称]_[判定][ACC].mr` 输出到命令行。
 
 ## 编译方法
 
 ### Windows
 
 * 使用 Tiny C Compiler
-    1. 下载 [Tiny C Compiler](https://bellard.org/tcc/) 编译器并添加到 PATH 目录。
+    1. 下载 [Tiny C Compiler](https://bellard.org/tcc/) 并添加到 PATH 目录。
     2. 在仓库根目录下运行 `make.bat`。
 
 * 使用 MinGW（GCC）
     1. 下载安装。
-    2. 在仓库根目录下执行 `gcc main.c func.c -o mr.exe -m32 -O3 -static -std=c11`。
+    2. 在仓库根目录下运行 `gmake.bat`。
