@@ -1,7 +1,8 @@
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
 #include <time.h>
+
 #include "common.h"
 
 int main(int argc, char **argv) {
@@ -19,9 +20,11 @@ int main(int argc, char **argv) {
     }
     FILE *fp_out = fopen(argv[1], "w");
     fprintf(fp_out,
-        "=\"File Name\",=\"Song Name\",=\"Song Author\",=\"Difficulty\",=\"Score\","
-        "=\"Accuracy\",=\"Judgement\",=\"Max Combo\",=\"Best\",=\"Cool\",=\"Good\",=\"Miss\","
-        "=\"Mods\",=\"Chart md5\",=\"Time\",=\"Malody Ver\"\n");
+            "=\"File Name\",=\"Song Name\",=\"Song "
+            "Author\",=\"Difficulty\",=\"Score\","
+            "=\"Accuracy\",=\"Judgement\",=\"Max "
+            "Combo\",=\"Best\",=\"Cool\",=\"Good\",=\"Miss\","
+            "=\"Mods\",=\"Chart md5\",=\"Time\",=\"Malody Ver\"\n");
     for (int i = 2; i < argc; i++) {
       FILE *fp_in = fopen(argv[i], "rb");
       if (fp_in == NULL) {
@@ -98,15 +101,19 @@ int main(int argc, char **argv) {
       error("File not found: %s\n", argv[i]);
       continue;
     }
-    printf("----------------+------------------------------------------------\n");
+    printf(
+        "----------------+------------------------------------------------\n");
     printf(" File Name \t| %s\n", argv[i]);
-    printf("----------------+------------------------------------------------\n");
+    printf(
+        "----------------+------------------------------------------------\n");
     MalodyReplayInfo mr;
     memset(&mr, 0, sizeof(mr));
     MalodyReplayInfo_read(fp, &mr);
     MalodyReplayInfo_print(&mr);
-    if (i+1 == argc) {
-      printf("----------------+------------------------------------------------\n");
+    if (i + 1 == argc) {
+      printf(
+          "----------------+------------------------------------------------"
+          "\n");
     }
     fclose(fp);
   }

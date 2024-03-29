@@ -1,18 +1,22 @@
 #ifndef _COMMON_H
 #define _COMMON_H
 
-#define STR_SIZE      (1024)
-#define GET_BIT(x,n)  (((x) & (1<<n)) >> n)
-#define error(...)    fprintf(stderr, "[ERROR] "__VA_ARGS__)
-#define HELP_INFO\
-  "mr - MalodyReplayChecker v0.2.0\n"\
-  "Usage: mr [command] [output-file.csv] <replay-file(s).mr ...>\n"\
-  "Command: \n"\
-  "    (none)    output the replay information to the screen\n"\
-  "    rename    rename the replay files to the formatted name\n"\
-  "    name      output the formatted file name to the screen\n"\
-  "    csv       write the replay information to output-file.csv\n"\
-  "              in CSV format that can be opened with Excel\n"\
+// 字符串最大长度
+#define STR_SIZE (1024)
+// 获取 x 的右起第 n 位二进制位
+#define GET_BIT(x, n) (((x) >> (n)) & 1)
+// 输出报错信息到 stderr 并在开头添加 "[ERROR] "
+#define error(...) fprintf(stderr, "[ERROR] "__VA_ARGS__)
+// 帮助信息
+#define HELP_INFO                                                   \
+  "mr - MalodyReplayChecker v0.2.0\n"                               \
+  "Usage: mr [command] [output-file.csv] <replay-file(s).mr ...>\n" \
+  "Command: \n"                                                     \
+  "    (none)    output the replay information to the screen\n"     \
+  "    rename    rename the replay files to the formatted name\n"   \
+  "    name      output the formatted file name to the screen\n"    \
+  "    csv       write the replay information to output-file.csv\n" \
+  "              in CSV format that can be opened with Excel\n"     \
   "See github.com/uzxn/MalodyReplayChecker for more information\n"
 
 typedef char byte, string[STR_SIZE];
@@ -27,7 +31,7 @@ typedef struct MalodyReplayInfo {
   int best;
   int cool;
   int good;
-  double acc; // 非文件内容, 由程序计算得出
+  double acc;  // 非从文件读取, 由程序计算得出
   int miss;
   int mods;
   char judge;
