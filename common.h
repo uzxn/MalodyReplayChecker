@@ -9,7 +9,7 @@
 #define error(...) fprintf(stderr, "[ERROR] "__VA_ARGS__)
 // 帮助信息
 #define HELP_INFO                                                   \
-  "mr - MalodyReplayChecker v0.2.0\n"                               \
+  "mr - MalodyReplayChecker v0.2.1\n"                               \
   "Usage: mr [command] [output-file.csv] <replay-file(s).mr ...>\n" \
   "Command: \n"                                                     \
   "    (none)    output the replay information to the screen\n"     \
