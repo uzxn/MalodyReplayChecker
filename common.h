@@ -9,11 +9,11 @@
 #define error(...) fprintf(stderr, "[ERROR] "__VA_ARGS__)
 // 帮助信息
 #define HELP_INFO                                                   \
-  "mr - MalodyReplayChecker v0.2.1\n"                               \
-  "Usage: mr [command] [output-file.csv] <replay-file(s).mr ...>\n" \
+  "mr - MalodyReplayChecker v0.3.0\n"                               \
+  "Usage: mr [command] [output-file.csv] <replay-file(s).mr...>\n"  \
   "Command: \n"                                                     \
-  "    (none)    output the replay information to the screen\n"     \
-  "    rename    rename the replay files to the formatted name\n"   \
+  "    (none)    rename the replay files to the formatted name\n"   \
+  "    info      output the replay information to the screen\n"     \
   "    name      output the formatted file name to the screen\n"    \
   "    csv       write the replay information to output-file.csv\n" \
   "              in CSV format that can be opened with Excel\n"     \
@@ -35,9 +35,18 @@ typedef struct MalodyReplayInfo {
   int miss;
   int mods;
   char judge;
-  string time;
+  struct {
+    int year;    // 公历年份
+    int month;   // 月份
+    int date;    // 一月中的第几天 (日期)
+    int hour;    // 小时
+    int minute;  // 分钟
+    int second;  // 秒
+  } time;        // 游玩时间
 } MalodyReplayInfo;
 
+// 删除文件名中的限制字符 (如斜杠, 星号等)
+void delete_forbidden_character(char *str);
 // 从 fp 指向的 .mr 文件中读取一个整数
 void read_int(FILE *fp, int *var);
 // 从 fp 指向的 .mr 文件中读取一个字符串

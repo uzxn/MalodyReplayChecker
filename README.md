@@ -6,18 +6,18 @@ Malody 回放文件信息查看工具
 
 ### 显示帮助信息
 
-在命令行下执行：`mr`。
+在命令行下执行：`mr` 或 `mr help`。
 
 ### 查看回放信息
 
-在命令行下执行：`mr XXX.mr YYY.mr ...`，其中 `XXX.mr` `YYY.mr` 为回放文件，支持多文件。
+在命令行下执行：`mr info XXX.mr YYY.mr ...`，其中 `XXX.mr` `YYY.mr` 为回放文件，支持多文件。
 
-例如：`mr a.mr` `mr a.mr b.mr c.mr`。
+例如：`mr info a.mr` `mr info a.mr b.mr c.mr`。
 
 使用例：
 
 ```txt
-D:\>mr test.mr
+D:\>mr info test.mr
 ----------------+------------------------------------------------
  File Name      | test.mr
 ----------------+------------------------------------------------
@@ -61,13 +61,15 @@ All finished
 
 ### 批量重命名
 
-在命令行下执行：`mr rename XXX.mr YYY.mr ...`，其中 `XXX.mr` `YYY.mr` 为回放文件，支持多文件。
+在文件夹中选中回放文件**直接拖拽**到 `mr.exe` 上（推荐）。
 
-例如：`mr rename a.mr` `mr rename a.mr b.mr c.mr`。
+或在命令行下执行：`mr XXX.mr YYY.mr ...`，其中 `XXX.mr` `YYY.mr` 为回放文件，支持多文件。
 
-回放文件将会重命名为以下格式：`[歌曲名称]_[难度名称]_[判定][ACC].mr`。
+例如：`mr a.mr` `mr a.mr b.mr c.mr`。
 
-例如：`Malody 4K Dan v3 (Regular)-Jack_Reg-9 Kikai Shoujo Gensou_C99.30.mr`。
+回放文件将会重命名为以下格式：`[游玩时间]_[歌曲名称]_[难度名称]_[判定][ACC].mr`。
+
+例如：`2023-08-10_Handstream Pack ver.3_[Boss] KisenonP feat. Hatsune Miku - Hayabusa_C98.60.mr`。
 
 ### 查看新文件名
 
@@ -75,7 +77,7 @@ All finished
 
 例如：`mr name a.mr` `mr name a.mr b.mr c.mr`。
 
-会将 `[歌曲名称]_[难度名称]_[判定][ACC].mr` 输出到命令行。
+会将 `[游玩时间]_[歌曲名称]_[难度名称]_[判定][ACC].mr` 输出到命令行。
 
 ## 编译方法
 

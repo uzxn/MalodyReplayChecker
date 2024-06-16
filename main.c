@@ -7,7 +7,9 @@
 
 int main(int argc, char **argv) {
   argc--, argv++;
-  if (argc == 0) {
+
+  // help 命令: 显示帮助信息
+  if (argc == 0 || strcmp(argv[0], "help") == 0) {
     printf(HELP_INFO);
     return 0;
   }
@@ -61,13 +63,18 @@ int main(int argc, char **argv) {
       memset(&mr, 0, sizeof(mr));
       MalodyReplayInfo_read(fp, &mr);
       fclose(fp);
-      printf(" -> %s_%s_%c%.2lf.mr\n", mr.song, mr.diff, mr.judge, mr.acc);
+      string new_name = {0};
+      sprintf(new_name, "%04d-%02d-%02d_%s_%s_%c%.2lf.mr", mr.time.year,
+              mr.time.month, mr.time.date, mr.song, mr.diff, mr.judge, mr.acc);
+      delete_forbidden_character(new_name);
+      printf("  -> %s\n", new_name);
+      // printf(" -> %s_%s_%c%.2lf.mr\n", mr.song, mr.diff, mr.judge, mr.acc);
     }
     return 0;
   }
 
-  // rename 命令: 重命名回放文件
-  if (strcmp(argv[0], "rename") == 0) {
+  // info 命令: 输出回放信息
+  if (strcmp(argv[0], "info") == 0) {
     if (argc < 2) {
       error("Crazy arguments\n");
       return 0;
@@ -78,45 +85,50 @@ int main(int argc, char **argv) {
         error("File not found: %s\n", argv[i]);
         continue;
       }
-      printf("Current file: %s\n", argv[i]);
+      printf(
+          "----------------+------------------------------------------------"
+          "\n");
+      printf(" File Name \t| %s\n", argv[i]);
+      printf(
+          "----------------+------------------------------------------------"
+          "\n");
       MalodyReplayInfo mr;
       memset(&mr, 0, sizeof(mr));
       MalodyReplayInfo_read(fp, &mr);
-      fclose(fp);
-      string new_name = {0};
-      sprintf(new_name, "%s_%s_%c%.2lf.mr", mr.song, mr.diff, mr.judge, mr.acc);
-      printf("  -> %s\n", new_name);
-      if (rename(argv[i], new_name) != 0) {
-        error("%s\n", strerror(errno));
+      MalodyReplayInfo_print(&mr);
+      if (i + 1 == argc) {
+        printf(
+            "----------------+------------------------------------------------"
+            "\n");
       }
+      fclose(fp);
     }
-    printf("All finished\n");
     return 0;
   }
 
-  // 无命令: 输出回放信息
+  // 无命令: 重命名回放文件
   for (int i = 0; i < argc; i++) {
     FILE *fp = fopen(argv[i], "rb");
     if (fp == NULL) {
       error("File not found: %s\n", argv[i]);
       continue;
     }
-    printf(
-        "----------------+------------------------------------------------\n");
-    printf(" File Name \t| %s\n", argv[i]);
-    printf(
-        "----------------+------------------------------------------------\n");
+    printf("Current file: %s\n", argv[i]);
     MalodyReplayInfo mr;
     memset(&mr, 0, sizeof(mr));
     MalodyReplayInfo_read(fp, &mr);
-    MalodyReplayInfo_print(&mr);
-    if (i + 1 == argc) {
-      printf(
-          "----------------+------------------------------------------------"
-          "\n");
-    }
     fclose(fp);
+    string new_name = {0};
+    sprintf(new_name, "%04d-%02d-%02d_%s_%s_%c%.2lf.mr", mr.time.year,
+            mr.time.month, mr.time.date, mr.song, mr.diff, mr.judge, mr.acc);
+    delete_forbidden_character(new_name);
+    printf("  -> %s\n", new_name);
+    if (rename(argv[i], new_name) != 0) {
+      error("%s\n", strerror(errno));
+    }
   }
+
+  printf("All finished\n");
 
   return 0;
 }
