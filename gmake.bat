@@ -1,1 +1,0 @@
-gcc -Wall -Wextra main.c func.c -o mr.exe -O3 -static -std=c11
