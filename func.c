@@ -37,7 +37,7 @@ void MalodyReplayInfo_read(FILE *fp, MalodyReplayInfo *mr) {
   fread(&mr->ver[0], sizeof(byte), 1, fp);  // Malody Ver '04'
   fread(&n, sizeof(byte), 1, fp);           // Malody Ver '00'
 
-  read_str(fp, mr->md5);     // Chart md5
+  read_str(fp, mr->md5);     // Chart MD5
   read_str(fp, mr->diff);    // Difficulty
   read_str(fp, mr->song);    // Song Name
   read_str(fp, mr->author);  // Song Author
@@ -57,14 +57,14 @@ void MalodyReplayInfo_read(FILE *fp, MalodyReplayInfo *mr) {
   read_str(fp, str);  // "mr data"
 
   fread(&n, sizeof(byte), 4, fp);  // Malody Ver (the same as above)
-  read_int(fp, &n);                // The Number of Hits (useless)
+  read_int(fp, &mr->hit);          // The Number of Hits
   fread(&n, sizeof(byte), 1, fp);  // *unknown
 
   read_int(fp, &n);  // Playing Time
   time_t time_num = n;
   struct tm *time_struct = localtime(&time_num);
   mr->time.year = 1900 + time_struct->tm_year;  // tm_year 为从 1900 年起的年数
-  mr->time.month = 1 + time_struct->tm_mon;  // tm_mon 范围为 0~11
+  mr->time.month = 1 + time_struct->tm_mon;     // tm_mon 范围为 0~11
   mr->time.date = time_struct->tm_mday;
   mr->time.hour = time_struct->tm_hour;
   mr->time.minute = time_struct->tm_min;
@@ -87,21 +87,22 @@ void MalodyReplayInfo_print(MalodyReplayInfo *mr) {
   printf(" Cool \t\t| %d\n", mr->cool);
   printf(" Good \t\t| %d\n", mr->good);
   printf(" Miss \t\t| %d\n", mr->miss);
+  printf(" Total Hit \t| %d\n", mr->hit);
 
   printf(" Mods \t\t| ");
-  // if (GET_BIT(mr->mods, 0));  // *unknown
+  if (GET_BIT(mr->mods, 0)) printf("Fair ");
   if (GET_BIT(mr->mods, 1)) printf("Luck ");
   if (GET_BIT(mr->mods, 2)) printf("Flip ");
   if (GET_BIT(mr->mods, 3)) printf("Const ");
   if (GET_BIT(mr->mods, 4)) printf("Dash ");
   if (GET_BIT(mr->mods, 5)) printf("Rush ");
   if (GET_BIT(mr->mods, 6)) printf("Hide ");
-  // if (GET_BIT(mr->mods, 7));  // *unknown
+  if (GET_BIT(mr->mods, 7)) printf("Origin ");
   if (GET_BIT(mr->mods, 8)) printf("Slow ");
   if (GET_BIT(mr->mods, 9)) printf("Death ");
   printf("\n");
 
-  printf(" Chart md5 \t| %s\n", mr->md5);
+  printf(" Chart MD5 \t| %s\n", mr->md5);
   printf(" Time \t\t| %04d-%02d-%02d %02d:%02d:%02d\n", mr->time.year,
          mr->time.month, mr->time.date, mr->time.hour, mr->time.minute,
          mr->time.second);
@@ -121,16 +122,17 @@ void MalodyReplayInfo_write_csv(FILE *fp, MalodyReplayInfo *mr) {
   fprintf(fp, "%d,", mr->cool);
   fprintf(fp, "%d,", mr->good);
   fprintf(fp, "%d,", mr->miss);
+  fprintf(fp, "%d,", mr->hit);
 
   fprintf(fp, "=\"");
-  // if (GET_BIT(mr->mods, 0));  // *unknown
+  if (GET_BIT(mr->mods, 0)) fprintf(fp, "Fair ");
   if (GET_BIT(mr->mods, 1)) fprintf(fp, "Luck ");
   if (GET_BIT(mr->mods, 2)) fprintf(fp, "Flip ");
   if (GET_BIT(mr->mods, 3)) fprintf(fp, "Const ");
   if (GET_BIT(mr->mods, 4)) fprintf(fp, "Dash ");
   if (GET_BIT(mr->mods, 5)) fprintf(fp, "Rush ");
   if (GET_BIT(mr->mods, 6)) fprintf(fp, "Hide ");
-  // if (GET_BIT(mr->mods, 7));  // *unknown
+  if (GET_BIT(mr->mods, 7)) fprintf(fp, "Origin ");
   if (GET_BIT(mr->mods, 8)) fprintf(fp, "Slow ");
   if (GET_BIT(mr->mods, 9)) fprintf(fp, "Death ");
   fprintf(fp, "\",");

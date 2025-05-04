@@ -7,17 +7,6 @@
 #define GET_BIT(x, n) (((x) >> (n)) & 1)
 // 输出报错信息到 stderr 并在开头添加 "[ERROR] "
 #define error(...) fprintf(stderr, "[ERROR] "__VA_ARGS__)
-// 帮助信息
-#define HELP_INFO                                                   \
-  "mr - MalodyReplayChecker v0.3.0\n"                               \
-  "Usage: mr [command] [output-file.csv] <replay-file(s).mr...>\n"  \
-  "Command: \n"                                                     \
-  "    (none)    rename the replay files to the formatted name\n"   \
-  "    info      output the replay information to the screen\n"     \
-  "    name      output the formatted file name to the screen\n"    \
-  "    csv       write the replay information to output-file.csv\n" \
-  "              in CSV format that can be opened with Excel\n"     \
-  "See github.com/uzxn/MalodyReplayChecker for more information\n"
 
 typedef char byte, string[STR_SIZE];
 typedef struct MalodyReplayInfo {
@@ -35,6 +24,7 @@ typedef struct MalodyReplayInfo {
   int miss;
   int mods;
   char judge;
+  int hit;
   struct {
     int year;    // 公历年份
     int month;   // 月份
